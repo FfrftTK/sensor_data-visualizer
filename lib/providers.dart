@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/all.dart';
 
-import 'controllers/accelerometer_state.dart';
+import 'controllers/accelerometer_controller.dart';
 
 final counterProvider = StateNotifierProvider.autoDispose((_) => Counter());
 final accelerometerProvider =
