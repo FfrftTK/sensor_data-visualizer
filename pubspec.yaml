@@ -29,6 +29,7 @@ dependencies:
   state_notifier:
   all_sensors:
   get:
+  charts_flutter:
 
 dev_dependencies:
   flutter_test:
