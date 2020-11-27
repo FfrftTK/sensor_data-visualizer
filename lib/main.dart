@@ -7,10 +7,10 @@ import 'pages/pages.dart';
 import 'routes.dart';
 
 void main() {
-  runApp(ProviderScope(child: CounterApp()));
+  runApp(ProviderScope(child: App()));
 }
 
-class CounterApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
