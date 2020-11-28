@@ -12,17 +12,9 @@ class AccelerometerPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Accelerometer')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text(state.toString()),
-          ),
-          LineChart(
-            sampleData1(linesBarData()),
-            swapAnimationDuration: const Duration(milliseconds: 250),
-          ),
-        ],
+      body: LineChart(
+        controller.currentAccelerationLineChartData,
+        swapAnimationDuration: const Duration(milliseconds: 20),
       ),
     );
   }
@@ -112,17 +104,9 @@ LineChartData sampleData1(List<LineChartBarData> data) {
   );
 }
 
-List<LineChartBarData> linesBarData(List<AccelerationData> data) {
+List<LineChartBarData> linesBarData(List<FlSpot> data) {
   final lineChartBarData1 = LineChartBarData(
-    spots: [
-      FlSpot(1, 1),
-      FlSpot(3, 1.5),
-      FlSpot(5, 1.4),
-      FlSpot(7, 3.4),
-      FlSpot(10, 2),
-      FlSpot(12, 2.2),
-      FlSpot(13, 1.8),
-    ],
+    spots: data,
     isCurved: true,
     colors: [
       const Color(0xff4af699),
@@ -136,53 +120,9 @@ List<LineChartBarData> linesBarData(List<AccelerationData> data) {
       show: false,
     ),
   );
-  final lineChartBarData2 = LineChartBarData(
-    spots: [
-      FlSpot(1, 1),
-      FlSpot(3, 2.8),
-      FlSpot(7, 1.2),
-      FlSpot(10, 2.8),
-      FlSpot(12, 2.6),
-      FlSpot(13, 3.9),
-    ],
-    isCurved: true,
-    colors: [
-      const Color(0xffaa4cfc),
-    ],
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(show: false, colors: [
-      const Color(0x00aa4cfc),
-    ]),
-  );
-  final lineChartBarData3 = LineChartBarData(
-    spots: [
-      FlSpot(1, 2.8),
-      FlSpot(3, 1.9),
-      FlSpot(6, 3),
-      FlSpot(10, 1.3),
-      FlSpot(13, 2.5),
-    ],
-    isCurved: true,
-    colors: const [
-      Color(0xff27b6fc),
-    ],
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(
-      show: false,
-    ),
-  );
+
   return [
     lineChartBarData1,
-    lineChartBarData2,
-    lineChartBarData3,
   ];
 }
 
