@@ -19,21 +19,37 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
   final int storedEventsSize;
   final AccelerometerService accelerometerService;
 
-  void _initState() {
-    // Subscribe Accelerometer events
-    accelerometerEvents.listen(_storeEvent);
-  }
-
   List<LineBarDetail> get lineBarDetails =>
       accelerometerService.getLineBarDetails();
 
   LineChartData get currentAccelerationLineChartData =>
       accelerometerService.generateLineChartData(state.data);
 
-  AccelerationData get latestData => state.data.last;
+  void updateOffset() {
+    state = state.copyWith(data: [], offset: state.data.last);
+  }
+
+  void clearOffset() {
+    state = state.copyWith(data: [], offset: null);
+  }
+
+  /*
+  * private functions
+  * */
+
+  void _initState() {
+    // Subscribe Accelerometer events
+    accelerometerEvents.listen(_storeEvent);
+  }
 
   void _storeEvent(AccelerometerEvent event) {
-    final currentData = [...state.data, AccelerationData.fromEvent(event)];
+    var data = AccelerationData.fromEvent(event);
+
+    if (state.offset != null) {
+      data -= state.offset?.event;
+    }
+
+    final currentData = [...state.data, data];
 
     if (currentData.length > storedEventsSize) {
       currentData.removeAt(0);

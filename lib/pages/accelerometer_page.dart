@@ -7,7 +7,6 @@ class AccelerometerPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = useProvider(accelerometerProvider.state);
     final controller = useProvider(accelerometerProvider);
 
     return Scaffold(
@@ -36,7 +35,7 @@ class AccelerometerPage extends HookWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Get.width * 0.02),
                   border: Border.all(
-                    color: const Color(0xffdddddd),
+                    color: Get.theme.highlightColor,
                   ),
                 ),
                 constraints: BoxConstraints(
@@ -62,8 +61,12 @@ class AccelerometerPage extends HookWidget {
               ),
             ),
             RaisedButton(
-              onPressed: () => print('aa'),
-              child: const Text('Set current value as criteria '),
+              onPressed: controller.updateOffset,
+              child: const Text('Set current value as offset'),
+            ),
+            RaisedButton(
+              onPressed: controller.clearOffset,
+              child: const Text('Clear offset'),
             ),
           ],
         ),
