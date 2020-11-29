@@ -12,190 +12,114 @@ class AccelerometerPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Accelerometer')),
-      body: LineChart(
-        controller.currentAccelerationLineChartData,
-        swapAnimationDuration: const Duration(milliseconds: 20),
+      body: Container(
+        padding: EdgeInsets.all(Get.width * 0.025),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: Get.height * 0.02),
+              height: double.infinity,
+              constraints: BoxConstraints(
+                maxWidth: Get.width * 0.8,
+                maxHeight: Get.height * 0.5,
+              ),
+              child: LineChart(
+                controller.currentAccelerationLineChartData,
+                swapAnimationDuration: const Duration(milliseconds: 0),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Get.width * 0.02),
+                  border: Border.all(
+                    color: const Color(0xffdddddd),
+                  ),
+                ),
+                constraints: BoxConstraints(
+                    maxWidth: Get.width * 0.5, maxHeight: Get.height * 0.2),
+                padding: EdgeInsets.all(Get.width * 0.02),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: controller.lineBarDetails
+                        .map(
+                          (e) => Indicator(
+                            description: e.description,
+                            colors: e.colors,
+                            size: Get.width * 0.05,
+                            textStyle:
+                                const TextStyle(fontWeight: FontWeight.bold),
+                            padding: EdgeInsets.symmetric(
+                                vertical: Get.height * 0.005),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ),
+            RaisedButton(
+              onPressed: () => print('aa'),
+              child: const Text('Set current value as criteria '),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-LineChartData sampleData1(List<LineChartBarData> data) {
-  return LineChartData(
-    lineTouchData: LineTouchData(
-      touchTooltipData: LineTouchTooltipData(
-        tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-      ),
-      touchCallback: (LineTouchResponse touchResponse) {},
-      handleBuiltInTouches: true,
-    ),
-    gridData: FlGridData(
-      show: false,
-    ),
-    titlesData: FlTitlesData(
-//      bottomTitles: SideTitles(
-//        showTitles: true,
-//        reservedSize: 22,
-//        getTextStyles: (value) => const TextStyle(
-//          color: Color(0xff72719b),
-//          fontWeight: FontWeight.bold,
-//          fontSize: 16,
-//        ),
-//        margin: 10,
-//        getTitles: (value) {
-//          switch (value.toInt()) {
-//            case 2:
-//              return 'SEPT';
-//            case 7:
-//              return 'OCT';
-//            case 12:
-//              return 'DEC';
-//          }
-//          return '';
-//        },
-//      ),
-//      leftTitles: SideTitles(
-//        showTitles: true,
-//        getTextStyles: (value) => const TextStyle(
-//          color: Color(0xff75729e),
-//          fontWeight: FontWeight.bold,
-//          fontSize: 14,
-//        ),
-//        getTitles: (value) {
-//          switch (value.toInt()) {
-//            case 1:
-//              return '1m';
-//            case 2:
-//              return '2m';
-//            case 3:
-//              return '3m';
-//            case 4:
-//              return '5m';
-//          }
-//          return '';
-//        },
-//        margin: 8,
-//        reservedSize: 30,
-//      ),
-        ),
-    borderData: FlBorderData(
-      show: true,
-      border: const Border(
-        bottom: BorderSide(
-          color: Color(0xff4e4965),
-          width: 4,
-        ),
-        left: BorderSide(
-          color: Colors.transparent,
-        ),
-        right: BorderSide(
-          color: Colors.transparent,
-        ),
-        top: BorderSide(
-          color: Colors.transparent,
+class Indicator extends StatelessWidget {
+  const Indicator({
+    @required this.description,
+    this.size,
+    this.colors = const [Colors.transparent],
+    this.isSquare = true,
+    this.textStyle,
+    this.padding,
+    this.opacity,
+  });
+
+  final String description;
+  final List<Color> colors;
+  final double size;
+  final bool isSquare;
+  final TextStyle textStyle;
+  final EdgeInsetsGeometry padding;
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: 0.5,
+      child: Padding(
+        padding: padding,
+        child: Row(
+          children: [
+            Container(
+              width: size,
+              height: size,
+              decoration: BoxDecoration(
+                shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
+                color: colors.first,
+                gradient: colors.length > 2
+                    ? LinearGradient(
+                        colors: colors,
+                      )
+                    : null,
+              ),
+            ),
+            SizedBox(width: size * 0.5),
+            Text(
+              description,
+              style: textStyle,
+            ),
+          ],
         ),
       ),
-    ),
-//    minX: 0,
-//    maxX: 14,
-//    maxY: 5.5,
-//    minY: 0,
-    lineBarsData: data,
-  );
-}
-
-List<LineChartBarData> linesBarData(List<FlSpot> data) {
-  final lineChartBarData1 = LineChartBarData(
-    spots: data,
-    isCurved: true,
-    colors: [
-      const Color(0xff4af699),
-    ],
-    barWidth: 5,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(
-      show: false,
-    ),
-  );
-
-  return [
-    lineChartBarData1,
-  ];
-}
-
-List<LineChartBarData> linesBarData1() {
-  final lineChartBarData1 = LineChartBarData(
-    spots: [
-      FlSpot(1, 1),
-      FlSpot(3, 1.5),
-      FlSpot(5, 1.4),
-      FlSpot(7, 3.4),
-      FlSpot(10, 2),
-      FlSpot(12, 2.2),
-      FlSpot(13, 1.8),
-    ],
-    isCurved: true,
-    colors: [
-      const Color(0xff4af699),
-    ],
-    barWidth: 5,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(
-      show: false,
-    ),
-  );
-  final lineChartBarData2 = LineChartBarData(
-    spots: [
-      FlSpot(1, 1),
-      FlSpot(3, 2.8),
-      FlSpot(7, 1.2),
-      FlSpot(10, 2.8),
-      FlSpot(12, 2.6),
-      FlSpot(13, 3.9),
-    ],
-    isCurved: true,
-    colors: [
-      const Color(0xffaa4cfc),
-    ],
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(show: false, colors: [
-      const Color(0x00aa4cfc),
-    ]),
-  );
-  final lineChartBarData3 = LineChartBarData(
-    spots: [
-      FlSpot(1, 2.8),
-      FlSpot(3, 1.9),
-      FlSpot(6, 3),
-      FlSpot(10, 1.3),
-      FlSpot(13, 2.5),
-    ],
-    isCurved: true,
-    colors: const [
-      Color(0xff27b6fc),
-    ],
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(
-      show: false,
-    ),
-  );
-  return [
-    lineChartBarData1,
-    lineChartBarData2,
-    lineChartBarData3,
-  ];
+    );
+  }
 }

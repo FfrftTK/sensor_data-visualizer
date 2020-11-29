@@ -5,20 +5,35 @@ enum Axis { x, y, z }
 class AccelerometerService with FlChartUtils<AccelerationData> {
   const AccelerometerService();
 
-  static const _axisColorMap = {
-    Axis.x: [Color(0xffeeaaaa)],
-    Axis.y: [Color(0xffaaeeaa)],
-    Axis.z: [Color(0xffaaaaee)],
-  };
+  static const _lineBarDetails = [
+    LineBarDetail<Axis>(
+        identifier: Axis.x,
+        descriptionConverter: EnumToString.convertToString,
+        colors: [Color(0xffeeaaaa)]),
+    LineBarDetail<Axis>(
+        identifier: Axis.y,
+        descriptionConverter: EnumToString.convertToString,
+        colors: [Color(0xffaaeeaa)]),
+    LineBarDetail<Axis>(
+        identifier: Axis.z,
+        descriptionConverter: EnumToString.convertToString,
+        colors: [Color(0xffaaaaee)]),
+  ];
+
+  @override
+  List<LineBarDetail> getLineBarDetails() {
+    return _lineBarDetails;
+  }
 
   // Convert stream accelerometer data to FlChart drawable
   List<FlSpot> _generateFlSpotsByAxis(
       List<AccelerationData> dataSet, Axis axis) {
-    return super.convertDataSetToFlSpots(
+    final spots = super.convertDataSetToFlSpots(
       dataSet,
       (AccelerationData data) =>
           _convertAccelerationDataToFlSpotByAxis(axis: axis, data: data),
     );
+    return spots.isEmpty ? [FlSpot(0, 0)] : spots;
   }
 
   FlSpot _convertAccelerationDataToFlSpotByAxis({
@@ -51,51 +66,28 @@ class AccelerometerService with FlChartUtils<AccelerationData> {
         show: false,
       ),
       titlesData: FlTitlesData(
-//      bottomTitles: SideTitles(
-//        showTitles: true,
-//        reservedSize: 22,
-//        getTextStyles: (value) => const TextStyle(
-//          color: Color(0xff72719b),
-//          fontWeight: FontWeight.bold,
-//          fontSize: 16,
-//        ),
-//        margin: 10,
-//        getTitles: (value) {
-//          switch (value.toInt()) {
-//            case 2:
-//              return 'SEPT';
-//            case 7:
-//              return 'OCT';
-//            case 12:
-//              return 'DEC';
-//          }
-//          return '';
-//        },
-//      ),
-//      leftTitles: SideTitles(
-//        showTitles: true,
-//        getTextStyles: (value) => const TextStyle(
-//          color: Color(0xff75729e),
-//          fontWeight: FontWeight.bold,
-//          fontSize: 14,
-//        ),
-//        getTitles: (value) {
-//          switch (value.toInt()) {
-//            case 1:
-//              return '1m';
-//            case 2:
-//              return '2m';
-//            case 3:
-//              return '3m';
-//            case 4:
-//              return '5m';
-//          }
-//          return '';
-//        },
-//        margin: 8,
-//        reservedSize: 30,
-//      ),
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
+          getTextStyles: (value) => const TextStyle(
+            color: Color(0xff72719b),
+            fontWeight: FontWeight.bold,
+            fontSize: 10,
           ),
+          margin: 10,
+          getTitles: (_) => '',
+        ),
+        leftTitles: SideTitles(
+          showTitles: true,
+          getTextStyles: (value) => const TextStyle(
+            color: Color(0xff75729e),
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
+          margin: Get.width * 0.05,
+          reservedSize: Get.width * 0.05,
+        ),
+      ),
       borderData: FlBorderData(
         show: true,
         border: const Border(
@@ -124,10 +116,10 @@ class AccelerometerService with FlChartUtils<AccelerationData> {
 
   @override
   List<LineChartBarData> generateChartBarsData(List<AccelerationData> dataSet) {
-    return Axis.values
+    return _lineBarDetails
         .map((e) => generateChartBarData(
-              _generateFlSpotsByAxis(dataSet, e),
-              colors: _axisColorMap[e],
+              _generateFlSpotsByAxis(dataSet, e.identifier),
+              colors: e.colors,
             ))
         .toList();
   }

@@ -11,5 +11,23 @@ mixin FlChartUtils<T> {
   });
 
   LineChartData generateLineChartData(List<T> dataSet);
+
   List<LineChartBarData> generateChartBarsData(List<T> dataSet);
+
+  List<LineBarDetail> getLineBarDetails();
+}
+
+@immutable
+class LineBarDetail<T> {
+  const LineBarDetail({
+    @required this.identifier,
+    @required this.descriptionConverter,
+    this.colors = const [Color(0xffaabbcc)],
+  });
+
+  final T identifier;
+  final String Function(T) descriptionConverter;
+  final List<Color> colors;
+
+  String get description => descriptionConverter(identifier);
 }
