@@ -30,6 +30,7 @@ dependencies:
   all_sensors:
   get:
   fl_chart:
+  enum_to_string:
 
 dev_dependencies:
   flutter_test:
