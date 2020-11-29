@@ -1,6 +1,6 @@
 part of utils;
 
-mixin FlChartUtils<T> {
+mixin FlChartUtilMixin<T> {
   List<FlSpot> convertDataSetToFlSpots(
           List<T> dataSet, FlSpot Function(T data) converter) =>
       dataSet.map(converter).toList();

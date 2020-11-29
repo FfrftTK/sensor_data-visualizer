@@ -2,7 +2,7 @@ part of services;
 
 enum Axis { x, y, z }
 
-class AccelerometerService with FlChartUtils<AccelerationData> {
+class AccelerometerService with FlChartUtilMixin<AccelerationData> {
   const AccelerometerService();
 
   static const _lineBarDetails = [
