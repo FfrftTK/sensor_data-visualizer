@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:velocity_visualizer/theme.dart';
 
 import 'pages/pages.dart';
 import 'routes.dart';
@@ -14,6 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: buildTheme(),
       getPages: getPages,
       home: const AccelerometerPage(),
     );
