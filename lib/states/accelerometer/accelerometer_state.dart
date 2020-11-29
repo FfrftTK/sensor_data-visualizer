@@ -7,6 +7,7 @@ part 'accelerometer_state.freezed.dart';
 abstract class AccelerometerState with _$AccelerometerState {
   const factory AccelerometerState({
     @Default([]) List<AccelerationData> data,
+    AccelerationData offset,
   }) = _AccelerometerState;
 }
 
@@ -23,7 +24,3 @@ class AccelerationData {
   final AccelerometerEvent event;
   final DateTime timestamp;
 }
-
-//extension AccelerationDataExtension on AccelerationData {
-//
-//}
