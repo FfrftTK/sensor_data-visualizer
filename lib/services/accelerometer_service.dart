@@ -20,36 +20,12 @@ class AccelerometerService with FlChartUtils<AccelerationData> {
         colors: [Color(0xffaaaaee)]),
   ];
 
+  /*
+  * override functions
+  * */
   @override
   List<LineBarDetail> getLineBarDetails() {
     return _lineBarDetails;
-  }
-
-  // Convert stream accelerometer data to FlChart drawable
-  List<FlSpot> _generateFlSpotsByAxis(
-      List<AccelerationData> dataSet, Axis axis) {
-    final spots = super.convertDataSetToFlSpots(
-      dataSet,
-      (AccelerationData data) =>
-          _convertAccelerationDataToFlSpotByAxis(axis: axis, data: data),
-    );
-    return spots.isEmpty ? [FlSpot(0, 0)] : spots;
-  }
-
-  FlSpot _convertAccelerationDataToFlSpotByAxis({
-    @required Axis axis,
-    @required AccelerationData data,
-  }) {
-    final timestampAsSec = data.timestamp.millisecondsSinceEpoch.toDouble();
-    switch (axis) {
-      case Axis.x:
-        return FlSpot(timestampAsSec, data.event.x);
-      case Axis.y:
-        return FlSpot(timestampAsSec, data.event.y);
-      case Axis.z:
-      default:
-        return FlSpot(timestampAsSec, data.event.z);
-    }
   }
 
   @override
@@ -140,5 +116,36 @@ class AccelerometerService with FlChartUtils<AccelerationData> {
         show: false,
       ),
     );
+  }
+
+  /**
+   * private functions
+   */
+
+  // Convert stream accelerometer data to FlChart drawable
+  List<FlSpot> _generateFlSpotsByAxis(
+      List<AccelerationData> dataSet, Axis axis) {
+    final spots = super.convertDataSetToFlSpots(
+      dataSet,
+      (AccelerationData data) =>
+          _convertAccelerationDataToFlSpotByAxis(axis: axis, data: data),
+    );
+    return spots.isEmpty ? [FlSpot(0, 0)] : spots;
+  }
+
+  FlSpot _convertAccelerationDataToFlSpotByAxis({
+    @required Axis axis,
+    @required AccelerationData data,
+  }) {
+    final timestampAsSec = data.timestamp.millisecondsSinceEpoch.toDouble();
+    switch (axis) {
+      case Axis.x:
+        return FlSpot(timestampAsSec, data.event.x);
+      case Axis.y:
+        return FlSpot(timestampAsSec, data.event.y);
+      case Axis.z:
+      default:
+        return FlSpot(timestampAsSec, data.event.z);
+    }
   }
 }
