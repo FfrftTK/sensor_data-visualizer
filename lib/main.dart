@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:velocity_visualizer/theme.dart';
+import 'package:sensor_data_visualizer/theme.dart';
 
 import 'pages/pages.dart';
 import 'routes.dart';
