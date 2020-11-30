@@ -32,6 +32,7 @@ dependencies:
   fl_chart:
   enum_to_string:
   mqtt_client:
+  typed_data:
 
 dev_dependencies:
   flutter_test:
