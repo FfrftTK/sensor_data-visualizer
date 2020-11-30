@@ -7,17 +7,27 @@ class MQTTService {
     this.port = 1883,
   });
 
-  static MqttBrowserClient _client;
+  static MqttServerClient _client;
 
   final String serverUrl;
   final String clientIdentifier;
   final int port;
 
   void init() {
-//    _client ??= MqttBrowserClient(serverUrl, clientIdentifier)..port = port;
+    _client ??= MqttServerClient.withPort(serverUrl, clientIdentifier, port);
   }
 
   Future<void> connect([String username, String password]) {
-//    _client.connect(username, password);
+    return _client.connect(username, password);
+  }
+
+  void publish({
+    String topic = '',
+    MqttQos qos = MqttQos.exactlyOnce,
+    String data,
+  }) {
+    final buff = Uint8Buffer(0);
+    buff.addAll(data.codeUnits);
+    _client.publishMessage(topic, qos, buff);
   }
 }

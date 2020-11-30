@@ -12,10 +12,11 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
   AccelerometerController({
     this.storedEventsSize = 100,
     this.accelerometerService = const AccelerometerService(),
-//    this.mqttService = const MQTTService(
-//        serverUrl: 'ws://localhost',
-//        clientIdentifier: 'sensor_data_visualizer',
-//        port: 9001),
+    this.mqttService = const MQTTService(
+      serverUrl: '192.168.68.100',
+      clientIdentifier: 'sensor_data_visualizer',
+      port: 1883,
+    ),
   }) : super(const AccelerometerState()) {
     _initState();
   }
@@ -23,7 +24,7 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
   final int storedEventsSize;
   final AccelerometerService accelerometerService;
 //  final
-//  MQTTService mqttService;
+  MQTTService mqttService;
 
   List<LineBarDetail> get lineBarDetails =>
       accelerometerService.getLineBarDetails();
@@ -37,6 +38,7 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
 
   void clearOffset() {
     state = state.copyWith(data: [], offset: null);
+    mqttService.publish(topic: 'test', data: 'hogeeeeee');
   }
 
   /*
@@ -44,9 +46,9 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
   * */
 
   void _initState() async {
-//    mqttService
-//      ..init()
-//      ..connect();
+    mqttService
+      ..init()
+      ..connect();
 
     // Subscribe Accelerometer events
     accelerometerEvents.listen(_storeEvent);
