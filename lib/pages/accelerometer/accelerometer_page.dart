@@ -32,72 +32,74 @@ class AccelerometerPage extends HookWidget {
       body: Container(
         padding: EdgeInsets.all(Get.width * 0.025),
         alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: Get.height * 0.02),
-              height: double.infinity,
-              constraints: BoxConstraints(
-                maxWidth: Get.width * 0.8,
-                maxHeight: Get.height * 0.5,
-              ),
-              child: LineChart(
-                controller.currentAccelerationLineChartData,
-                swapAnimationDuration: const Duration(milliseconds: 0),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Get.width * 0.02),
-                border: Border.all(
-                  color: Get.theme.highlightColor,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: Get.height * 0.02),
+                height: double.infinity,
+                constraints: BoxConstraints(
+                  maxWidth: Get.width * 0.8,
+                  maxHeight: Get.height * 0.5,
+                ),
+                child: LineChart(
+                  controller.currentAccelerationLineChartData,
+                  swapAnimationDuration: const Duration(milliseconds: 0),
                 ),
               ),
-              constraints: BoxConstraints(
-                  maxWidth: Get.width * 0.5, maxHeight: Get.height * 0.2),
-              padding: EdgeInsets.all(Get.width * 0.02),
-              margin: EdgeInsets.all(Get.width * 0.05),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: controller.lineBarDetails
-                      .map(
-                        (e) => Indicator(
-                          description: e.description,
-                          colors: e.colors,
-                          size: Get.width * 0.05,
-                          textStyle:
-                              const TextStyle(fontWeight: FontWeight.bold),
-                          padding: EdgeInsets.symmetric(
-                              vertical: Get.height * 0.005),
-                        ),
-                      )
-                      .toList(),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Get.width * 0.02),
+                  border: Border.all(
+                    color: Get.theme.highlightColor,
+                  ),
+                ),
+                constraints: BoxConstraints(
+                    maxWidth: Get.width * 0.5, maxHeight: Get.height * 0.2),
+                padding: EdgeInsets.all(Get.width * 0.02),
+                margin: EdgeInsets.all(Get.width * 0.05),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: controller.lineBarDetails
+                        .map(
+                          (e) => Indicator(
+                            description: e.description,
+                            colors: e.colors,
+                            size: Get.width * 0.05,
+                            textStyle:
+                                const TextStyle(fontWeight: FontWeight.bold),
+                            padding: EdgeInsets.symmetric(
+                                vertical: Get.height * 0.005),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: Get.width * 0.75,
-              child: RaisedButton(
-                onPressed: controller.updateOffset,
-                child: const Text('Set current observation as offset'),
-              ),
-            ),
-            SizedBox(
-              width: Get.width * 0.75,
-              child: RaisedButton(
-                onPressed: controller.clearOffset,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(Icons.refresh),
-                    const Text('  Clear offset'),
-                  ],
+              SizedBox(
+                width: Get.width * 0.75,
+                child: RaisedButton(
+                  onPressed: controller.updateOffset,
+                  child: const Text('Set current observation as offset'),
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                width: Get.width * 0.75,
+                child: RaisedButton(
+                  onPressed: controller.clearOffset,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.refresh),
+                      const Text('  Clear offset'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
