@@ -35,6 +35,8 @@ dependencies:
   typed_data:
   expandable:
   loader_overlay:
+  reactive_forms:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
