@@ -9,5 +9,6 @@ abstract class AccelerometerState with _$AccelerometerState {
     @Default([]) List<AccelerationData> data,
     AccelerationData offset,
     @Default(false) bool enableDataUpload,
+    @Required() MQTTConfig mqttConfig,
   }) = _AccelerometerState;
 }

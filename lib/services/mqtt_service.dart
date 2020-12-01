@@ -1,36 +1,31 @@
 part of services;
 
 class MQTTService {
-  const MQTTService({
-    @required this.serverUrl,
-    this.clientIdentifier = '',
-    this.port = 1883,
-  });
+  const MQTTService();
 
   static MqttServerClient _client;
 
-  final String serverUrl;
-  final String clientIdentifier;
-  final int port;
-
-  void init() {
-    _client ??= MqttServerClient.withPort(serverUrl, clientIdentifier, port);
+  void applyConfig(MQTTConfig config) {
+    // _client ??= MqttServerClient.withPort(
+    //   config.host,
+    //   config.clientIdentifier,
+    //   config.port,
+    // );
+    _client = MqttServerClient.withPort('192.168.68.100', 'vis', 1883);
   }
 
-  Future<void> connect([String username, String password]) {
-    return _client.connect(username, password);
+  Future<void> connect(MQTTConfig config) {
+    return _client.connect(config.username, config.password);
   }
 
   void disconnect() => _client.disconnect();
 
   void publish({
-    String topic = '',
+    MQTTConfig config,
     MqttQos qos = MqttQos.exactlyOnce,
     String data,
   }) {
-    if (_client.connectionStatus == MqttConnectionState.connected) {
-      final buff = Uint8Buffer(0)..addAll(data.codeUnits);
-      _client.publishMessage(topic, qos, buff);
-    }
+    final buff = Uint8Buffer(0)..addAll(data.codeUnits);
+    _client.publishMessage(config.topic, qos, buff);
   }
 }

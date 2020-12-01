@@ -8,7 +8,7 @@ import 'package:sensor_data_visualizer/theme.dart';
 import 'pages/pages.dart';
 import 'routes.dart';
 
-void main() {
+void main() async {
   runApp(ProviderScope(child: App()));
 }
 
