@@ -11,24 +11,7 @@ class AccelerometerPage extends HookWidget {
     final controller = useProvider(accelerometerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Accelerometer'),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.cloud_upload,
-              color: controller.cloudColor,
-            ),
-            onPressed: () async {
-              await controller.onCloudTapped();
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => Get.toNamed(AccelerometerConfigPage.routeName),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('Accelerometer')),
       body: Container(
         padding: EdgeInsets.all(Get.width * 0.025),
         alignment: Alignment.center,
@@ -81,7 +64,7 @@ class AccelerometerPage extends HookWidget {
               width: Get.width * 0.75,
               child: RaisedButton(
                 onPressed: controller.updateOffset,
-                child: const Text('Set current observation as offset'),
+                child: const Text('Set current value as offset'),
               ),
             ),
             SizedBox(

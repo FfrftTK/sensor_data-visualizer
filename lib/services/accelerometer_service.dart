@@ -140,13 +140,12 @@ class AccelerometerService with FlChartUtilMixin<AccelerationData> {
     final timestampAsSec = data.timestamp.millisecondsSinceEpoch.toDouble();
     switch (axis) {
       case Axis.x:
-        return FlSpot(timestampAsSec, data.x);
+        return FlSpot(timestampAsSec, data.event.x);
       case Axis.y:
-        return FlSpot(timestampAsSec, data.y);
+        return FlSpot(timestampAsSec, data.event.y);
       case Axis.z:
-        return FlSpot(timestampAsSec, data.z);
       default:
-        return FlSpot(timestampAsSec, 0);
+        return FlSpot(timestampAsSec, data.event.z);
     }
   }
 }
