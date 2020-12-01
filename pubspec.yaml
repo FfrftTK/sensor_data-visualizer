@@ -33,6 +33,8 @@ dependencies:
   enum_to_string:
   mqtt_client:
   typed_data:
+  expandable:
+  loader_overlay:
 
 dev_dependencies:
   flutter_test:
