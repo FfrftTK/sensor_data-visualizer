@@ -6,12 +6,11 @@ class MQTTService {
   static MqttServerClient _client;
 
   void applyConfig(MQTTConfig config) {
-    // _client ??= MqttServerClient.withPort(
-    //   config.host,
-    //   config.clientIdentifier,
-    //   config.port,
-    // );
-    _client = MqttServerClient.withPort('192.168.68.100', 'vis', 1883);
+    _client ??= MqttServerClient.withPort(
+      config.host,
+      config.clientIdentifier,
+      config.port,
+    );
   }
 
   Future<void> connect(MQTTConfig config) {
