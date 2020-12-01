@@ -144,8 +144,9 @@ class AccelerometerService with FlChartUtilMixin<AccelerationData> {
       case Axis.y:
         return FlSpot(timestampAsSec, data.y);
       case Axis.z:
-      default:
         return FlSpot(timestampAsSec, data.z);
+      default:
+        return FlSpot(timestampAsSec, 0);
     }
   }
 }
