@@ -1,12 +1,13 @@
 import 'package:all_sensors/all_sensors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:sensor_data_visualizer/entities/entities.dart';
 import 'package:sensor_data_visualizer/services/services.dart';
 import 'package:sensor_data_visualizer/utils/utils.dart';
 
 import 'accelerometer_state.dart';
 
-export 'accelerometer_state.dart' show AccelerometerState, AccelerationData;
+export 'accelerometer_state.dart' show AccelerometerState;
 
 class AccelerometerController extends StateNotifier<AccelerometerState> {
   AccelerometerController({
@@ -58,7 +59,7 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
     var data = AccelerationData.fromEvent(event);
 
     if (state.offset != null) {
-      data -= state.offset?.event;
+      data -= state.offset;
     }
 
     final currentData = [...state.data, data];
