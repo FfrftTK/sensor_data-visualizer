@@ -28,7 +28,9 @@ class MQTTService {
     MqttQos qos = MqttQos.exactlyOnce,
     String data,
   }) {
-    final buff = Uint8Buffer(0)..addAll(data.codeUnits);
-    _client.publishMessage(topic, qos, buff);
+    if (_client.connectionStatus == MqttConnectionState.connected) {
+      final buff = Uint8Buffer(0)..addAll(data.codeUnits);
+      _client.publishMessage(topic, qos, buff);
+    }
   }
 }

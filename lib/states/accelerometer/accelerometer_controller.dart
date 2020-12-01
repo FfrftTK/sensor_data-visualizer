@@ -8,6 +8,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sensor_data_visualizer/entities/entities.dart';
 import 'package:sensor_data_visualizer/services/services.dart';
 import 'package:sensor_data_visualizer/utils/utils.dart';
+import 'package:sensor_data_visualizer/widgets/widgets.dart';
 
 import 'accelerometer_state.dart';
 
@@ -60,8 +61,10 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
         await mqttService.connect();
         state = state.copyWith(enableDataUpload: true);
       } on Exception catch (e) {
-        print(e);
-        // Get.dialog();
+        Get.dialog(SimpleNotifyDialog(
+          titleText: 'Connection Error',
+          contentText: '$e',
+        ));
       }
     }
 
