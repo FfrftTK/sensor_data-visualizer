@@ -39,7 +39,6 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
 
   void clearOffset() {
     state = state.copyWith(data: [], offset: null);
-    mqttService.publish(topic: 'test', data: 'hogeeeeee');
   }
 
   /*
@@ -62,12 +61,13 @@ class AccelerometerController extends StateNotifier<AccelerometerState> {
       data -= state.offset;
     }
 
-    final currentData = [...state.data, data];
+    final currentDataSet = [...state.data, data];
 
-    if (currentData.length > storedEventsSize) {
-      currentData.removeAt(0);
+    if (currentDataSet.length > storedEventsSize) {
+      currentDataSet.removeAt(0);
     }
 
-    state = state.copyWith(data: currentData);
+    mqttService.publish(topic: 'test', data: data.jsonString);
+    state = state.copyWith(data: currentDataSet);
   }
 }

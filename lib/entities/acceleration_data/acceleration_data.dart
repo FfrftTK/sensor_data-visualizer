@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:all_sensors/all_sensors.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'acceleration_data.freezed.dart';
+part 'acceleration_data.g.dart';
 
 @freezed
 abstract class AccelerationData with _$AccelerationData {
@@ -12,9 +15,17 @@ abstract class AccelerationData with _$AccelerationData {
     @Required() DateTime timestamp,
   }) = _AccelerationData;
 
+  factory AccelerationData.fromJson(Map<String, dynamic> json) =>
+      _$AccelerationDataFromJson(json);
+
   factory AccelerationData.fromEvent(AccelerometerEvent event) =>
       AccelerationData(
           x: event.x, y: event.y, z: event.z, timestamp: DateTime.now());
+}
+
+extension AcccelerationDataExtension on AccelerationData {
+  Duration timeDifference(AccelerationData other) =>
+      timestamp.difference(other.timestamp);
 
   AccelerationData operator -(AccelerationData other) {
     return AccelerationData(
@@ -24,9 +35,6 @@ abstract class AccelerationData with _$AccelerationData {
       timestamp: timestamp,
     );
   }
-}
 
-extension on AccelerationData {
-  Duration timeDifference(AccelerationData other) =>
-      timestamp.difference(other.timestamp);
+  String get jsonString => json.encode(toJson());
 }
