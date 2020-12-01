@@ -31,6 +31,12 @@ dependencies:
   get:
   fl_chart:
   enum_to_string:
+  mqtt_client:
+  typed_data:
+  expandable:
+  loader_overlay:
+  reactive_forms:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
