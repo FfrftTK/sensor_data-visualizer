@@ -21,13 +21,14 @@ class MQTTService {
     return _client.connect(username, password);
   }
 
+  void disconnect() => _client.disconnect();
+
   void publish({
     String topic = '',
     MqttQos qos = MqttQos.exactlyOnce,
     String data,
   }) {
-    final buff = Uint8Buffer(0);
-    buff.addAll(data.codeUnits);
+    final buff = Uint8Buffer(0)..addAll(data.codeUnits);
     _client.publishMessage(topic, qos, buff);
   }
 }
