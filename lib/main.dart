@@ -18,6 +18,7 @@ class App extends StatelessWidget {
     return GlobalLoaderOverlay(
       useDefaultLoading: true,
       child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: buildTheme(),
         getPages: getPages,
         home: const AccelerometerPage(),
