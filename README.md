@@ -1,17 +1,16 @@
-# sensor_data_visualizer
+# Sensor data visualizer
+A simple sensor data visualizer for Android and iOS.
 
-A new Flutter application.
+Observed data is able to upload to your environment.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+<img width=200 src="https://user-images.githubusercontent.com/47964431/101439735-810dc280-3958-11eb-9175-0b4b93158c12.jpg">　
+<img width=200 src="https://user-images.githubusercontent.com/47964431/101439738-8408b300-3958-11eb-9d66-37169b2f5a54.jpg">
 
-A few resources to get you started if this is your first Flutter project:
+## Supported sensors
+More sensors will be supported in future updates.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+|Sensor|Visualization|MQTT publish|
+|----|----|----|
+|Acceleration|✅|✅|
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# sensor-data-visualizer
